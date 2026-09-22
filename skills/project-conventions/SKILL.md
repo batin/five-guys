@@ -1,11 +1,11 @@
 ---
 name: project-conventions
-description: "{{PROJECT_NAME}} project conventions, naming standards, monorepo structure, commit format, and Definition of Done. Checked before starting code and before committing."
+description: "{{PROJECT_NAME}} project conventions, naming standards, project layout, commit format, and Definition of Done. Checked before starting code and before committing."
 ---
 
 # {{PROJECT_NAME}} Project Conventions
 
-## Monorepo Structure
+## Project Layout
 ```
 {{PROJECT_NAME}}/
   {{WEB_APP_PATH}}          # Frontend agent
@@ -14,7 +14,8 @@ description: "{{PROJECT_NAME}} project conventions, naming standards, monorepo s
   {{DB_PKG_PATH}}           # Schema, migrations, seed (Data/Infra agent)
 ```
 - Package manager: **{{PKG_MANAGER}}**.
-- Validation schemas are defined only in the shared package; FE and BE consume from there.
+- Validation schemas are defined only in the shared package/module; FE and BE consume from there.
+- **Monorepo or single repo, both work.** In a monorepo, the four paths above are separate top-level directories/packages. In a single-repo or single-app project (no separate frontend/backend split), some or all of these paths can be the same directory — even `.` for all four. When paths coincide, agents tell their areas apart by **file/module pattern** instead of top-level directory (e.g. `src/routes/api/**` = backend, `src/components/**` = frontend, `src/db/schema.*` = data-infra), following the same ownership boundaries below.
 
 ## Card ID & Naming
 
@@ -39,10 +40,12 @@ test(MODULE-DB-002): short description
 ## Ownership Boundaries
 | Area | Owner |
 |------|-------|
-| API app ({{API_APP_PATH}}), OpenAPI, business rules | Backend agent |
-| Web app ({{WEB_APP_PATH}}), UI screens | Frontend agent |
-| DB package ({{DB_PKG_PATH}}), auth infrastructure, CI | Data/Infra agent |
-| Shared package schemas ({{SHARED_PKG_PATH}}) | Backend agent (FE consumes, changes go through BE) |
+| API app/module ({{API_APP_PATH}}), OpenAPI, business rules | Backend agent |
+| Web app/module ({{WEB_APP_PATH}}), UI screens | Frontend agent |
+| DB package/module ({{DB_PKG_PATH}}), auth infrastructure, CI | Data/Infra agent |
+| Shared package/module schemas ({{SHARED_PKG_PATH}}) | Backend agent (FE consumes, changes go through BE) |
+
+If two or more of these paths are the same directory (single-repo/single-app project), ownership is decided by file pattern within that directory rather than by the directory itself — see the Project Layout note above.
 
 A BE card that needs a schema change adds a `[SCHEMA-REQUEST]` note to its description; the Data/Infra agent applies it.
 

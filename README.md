@@ -1,6 +1,6 @@
 # five guys 🍔
 
-Five agents, one order, no substitutions. A contract-first workflow — architect, backend, frontend, data-infra, qa — for monorepo product teams. Drop this folder into any project's `.claude/plugins/` and run `/setup`; it asks a few questions and cooks up a configuration for your project.
+Five agents, one order, no substitutions. A contract-first workflow — architect, backend, frontend, data-infra, qa — for product teams, whether the project is a monorepo, a single-repo full-stack app, or anything in between. Drop this folder into any project's `.claude/plugins/` and run `/setup`; it asks a few questions and cooks up a configuration for your project.
 
 ---
 
@@ -50,7 +50,7 @@ five-guys/
     qa.md                               # E2E tests, security audit, acceptance
   skills/
     agent-coordination/SKILL.md         # Workflow, handoff protocol
-    project-conventions/SKILL.md        # Naming, monorepo structure, DoD
+    project-conventions/SKILL.md        # Naming, project layout (monorepo or single-repo), DoD
   setup.sh                              # CLI fallback for templating
 ```
 
@@ -103,6 +103,10 @@ Chosen during `/setup`, applied to `skills/agent-coordination/SKILL.md`:
 
 Neither mode calls any real Jira/Trello/Linear API — it's vocabulary and workflow shape only. If you want live board integration, connect the relevant MCP server yourself; the agents will pick up its conventions on top of this kit.
 
+## 🗂️ Any Repo Layout
+
+`/setup` asks four paths (web, api, shared, db). In a **monorepo** those are four separate directories. In a **single-repo/single-app** project (no frontend/backend split), set all four to the same path — even `.` — and the agents fall back to splitting by file/module pattern instead of by directory (e.g. routes/services are backend's, components/pages are frontend's, schema files are data-infra's), keeping the same ownership boundaries either way.
+
 ---
 
 ## 🧩 Optional Skills (Toppings)
@@ -133,14 +137,6 @@ A validated agent-coordination pattern: **contract-first** development (shared s
 ## 🔗 Integration
 
 Claude Code automatically discovers this plugin when `.claude/plugins/five-guys/` exists with a valid `plugin.json` manifest, and discovers `/setup` from `commands/setup.md` the same way. `.claude-plugin/marketplace.json` lets this same repo also serve as a one-plugin marketplace, so `/plugin marketplace add` + `/plugin install` works without any manual copying.
-
----
-
-## Türkçe
-
-Bu kit İngilizce'yi varsayılan dil olarak kullanır (herkese açık paylaşım için). Agent'ların çalışma mantığı ve iş akışı Aron ERP'de doğrulanmış Türkçe orijinalinden birebir çevrilmiştir — mantıkta değişiklik yoktur, sadece dil ve proje-özel isimler/yollar şablonlanmıştır.
-
----
 
 **License:** MIT
 **Version:** 1.1.0

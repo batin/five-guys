@@ -23,6 +23,9 @@ Before FE and BE development starts, produce the **single source of truth** both
 - Application code (services, screens, migrations) → written by the owning agent.
 - Task-board status tracking → each agent manages their own card.
 
+## Project Layout
+Works in a monorepo (separate frontend/backend/shared/db directories) or a single-repo/single-app project. If the project isn't split into separate directories, draw contract boundaries by file/module pattern instead of by top-level path (see `project-conventions` skill).
+
 ## Workflow (every sprint/work request)
 ```
 [Work Request] → Architect

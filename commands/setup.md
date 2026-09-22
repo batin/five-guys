@@ -15,10 +15,13 @@ If `$ARGUMENTS` contains positional values in the same order as `setup.sh` (Proj
 
 - **Project name** (required, no default)
 - **Package manager**: npm / pnpm / yarn / bun (default `pnpm`)
-- **Frontend/web app path** (default `apps/web`)
-- **Backend/API app path** (default `apps/api`)
-- **Shared package path** (schemas/DTOs/constants) (default `packages/shared`)
-- **DB package path** (schema/migrations/seed) (default `packages/db`)
+- **Repo layout**: monorepo (separate frontend/backend/shared/db directories) or single-repo/single-app (no such split). This only changes the defaults below — either way the kit works the same.
+  - If **monorepo**: ask the next four paths normally.
+  - If **single-repo/single-app**: default all four paths below to the same value (e.g. `.` or `src`) unless the user names distinct ones. Tell the user the agents will then tell their areas apart by file/module pattern (routes vs components vs schema files) instead of by directory — this is expected and documented in `project-conventions`.
+- **Frontend/web app path** (default `apps/web`, or the single-repo path chosen above)
+- **Backend/API app path** (default `apps/api`, or the single-repo path chosen above)
+- **Shared package path** (schemas/DTOs/constants) (default `packages/shared`, or the single-repo path chosen above)
+- **DB package path** (schema/migrations/seed) (default `packages/db`, or the single-repo path chosen above)
 - **Modules/domains** — comma-separated business module names used in card IDs (e.g. `ORD,INV`) (default `CORE`)
 
 ## Step 2 — Working mode

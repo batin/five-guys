@@ -20,6 +20,8 @@ To understand the schema/architecture, prefer `graphify query "<question>"` or `
 - Service business rules and endpoints → **Backend agent**. You provide the schema and data-access foundation; BE writes the business rules.
 - Screens → **Frontend agent**.
 
+If `{{DB_PKG_PATH}}` and the other paths are the same directory (single-repo/single-app project), tell your area apart by file pattern instead — e.g. schema/migration files are yours, everything else isn't, regardless of directory.
+
 ## Working Rules
 1. **Schema monopoly:** the schema file is yours alone. The data-model section of the sprint's architecture contract is the schema's source of truth. On a contract dispute, leave a `[CONTRACT-DISPUTE]` task comment.
 2. **Migration discipline:** every change is produced via the migration tool; migration files are never hand-edited or deleted.

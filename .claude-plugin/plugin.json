@@ -1,7 +1,7 @@
 {
   "name": "five-guys",
   "version": "1.1.0",
-  "description": "Contract-first 5-agent workflow (Architect/Data-Infra/Backend/Frontend/QA) for monorepo product teams — five specialists, one order, no combo you didn't ask for. Drop this folder into any project's .claude/plugins/ and run /setup to configure it.",
+  "description": "Contract-first 5-agent workflow (Architect/Data-Infra/Backend/Frontend/QA) for product teams — works in a monorepo, a single-repo full-stack app, or a polyrepo. Five specialists, one order, no combo you didn't ask for. Drop this folder into any project's .claude/plugins/ and run /setup to configure it.",
   "author": {
     "name": "Batin"
   },
@@ -12,6 +12,7 @@
     "skills",
     "contract-first",
     "monorepo",
+    "single-repo",
     "workflow",
     "sprint"
   ],

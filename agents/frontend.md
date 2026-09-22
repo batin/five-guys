@@ -20,6 +20,8 @@ To understand the codebase, prefer `graphify query "<question>"` or `graphify ex
 - `{{DB_PKG_PATH}}` schemas → **Data/Infra agent**.
 - `{{SHARED_PKG_PATH}}` validation schemas: you **consume** them; if a change is needed, agree with the backend agent via a task note.
 
+If `{{WEB_APP_PATH}}`, `{{API_APP_PATH}}`, `{{DB_PKG_PATH}}`, `{{SHARED_PKG_PATH}}` are the same directory (single-repo/single-app project), tell your area apart by file pattern instead — e.g. pages/components/UI state are yours, routes/services/schema files aren't, regardless of directory.
+
 ## Working Rules
 1. **Component library + utility CSS.** Custom CSS is kept to a minimum.
 2. **Mock-first:** the output schema in the sprint's architecture contract is the source for mock fixtures; a screen ships fully functional on mock before the API task is done. On a contract dispute, leave a `[CONTRACT-DISPUTE]` task comment.

@@ -19,6 +19,8 @@ To understand the codebase, prefer `graphify query "<question>"` or `graphify ex
 - `{{DB_PKG_PATH}}` schema files → owned by the **Data/Infra agent**. If a schema change is needed, write the need in a task note titled `[SCHEMA-REQUEST]`.
 - `{{WEB_APP_PATH}}` screens → owned by the **Frontend agent**. You provide the endpoint FE needs, matching the contract.
 
+If `{{API_APP_PATH}}`, `{{WEB_APP_PATH}}`, `{{DB_PKG_PATH}}`, `{{SHARED_PKG_PATH}}` are the same directory (single-repo/single-app project), tell your area apart by file pattern instead — e.g. routes/controllers/services are yours, UI components and screens aren't, regardless of directory.
+
 ## Working Rules
 1. **Contract-first:** before writing an endpoint, check the sprint's architecture contract; define the schema to match it. On a contract dispute, leave a `[CONTRACT-DISPUTE]` task comment — the architect decides.
 2. **Layer discipline:** no business rules in controllers; business rules live in services.

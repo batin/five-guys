@@ -3,6 +3,8 @@
 # This is the non-interactive/CI fallback. For an interactive, guided setup
 # (working mode, optional skills), run the `/setup` slash command in Claude Code instead.
 # Usage: ./setup.sh "ProjectName" "pnpm" "apps/web" "apps/api" "packages/shared" "packages/db" "FEAT,BUG" "normal"
+# Works for a monorepo (four distinct paths) or a single-repo/single-app project
+# (pass the same path, e.g. ".", for all four — agents then split by file pattern).
 set -euo pipefail
 
 PROJECT_NAME=${1:?"project name required"}
