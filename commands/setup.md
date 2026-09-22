@@ -1,13 +1,13 @@
 ---
 name: setup
-description: "Configure aron-agent-kit for this project — paths, package manager, working mode, and optional skills."
+description: "Configure five guys for this project — paths, package manager, working mode, and optional skills."
 ---
 
-You are running the aron-agent-kit setup wizard. Follow these steps in order. Be conversational but efficient — don't re-ask something already given in `$ARGUMENTS`.
+You are running the five guys setup wizard. Follow these steps in order. Be conversational but efficient — don't re-ask something already given in `$ARGUMENTS`.
 
 ## Step 0 — Locate the plugin
 
-Find this plugin's own directory (it contains `agents/`, `skills/`, `setup.sh`, `.claude-plugin/plugin.json`) relative to where this command was invoked — normally `.claude/plugins/aron-agent-kit/` under the current project root. Verify `agents/` and `skills/` both exist there. If not found, tell the user and stop.
+Find this plugin's own directory (it contains `agents/`, `skills/`, `setup.sh`, `.claude-plugin/plugin.json`) relative to where this command was invoked — normally `.claude/plugins/five-guys/` under the current project root. Verify `agents/` and `skills/` both exist there. If not found, tell the user and stop.
 
 ## Step 1 — Core project config
 
@@ -72,7 +72,7 @@ Do this with direct Read + Edit calls, not by shelling out to `setup.sh` (gives 
 After all edits, run `grep -rn '{{' agents skills` (relative to the plugin directory) to confirm no placeholders remain — if any are found, fix them before finishing. Then print a summary:
 
 ```
-✅ aron-agent-kit configured
+✅ five guys configured
    Project: <name>
    Paths: <web> | <api> | <shared> | <db>
    Modules: <modules>

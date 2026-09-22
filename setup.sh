@@ -1,5 +1,5 @@
 #!/bin/bash
-# aron-agent-kit setup — fills {{PLACEHOLDER}} values in agents/ and skills/ in place.
+# five guys setup — fills {{PLACEHOLDER}} values in agents/ and skills/ in place.
 # This is the non-interactive/CI fallback. For an interactive, guided setup
 # (working mode, optional skills), run the `/setup` slash command in Claude Code instead.
 # Usage: ./setup.sh "ProjectName" "pnpm" "apps/web" "apps/api" "packages/shared" "packages/db" "FEAT,BUG" "normal"
@@ -80,7 +80,7 @@ fi
 
 find "$DIR" -name "*.bak" -delete
 
-echo "✅ aron-agent-kit configured for $PROJECT_NAME"
+echo "✅ five guys configured for $PROJECT_NAME"
 echo "   Paths: $WEB_APP_PATH | $API_APP_PATH | $SHARED_PKG_PATH | $DB_PKG_PATH"
 echo "   Modules: $MODULES"
 echo "   Mode: $WORKING_MODE"

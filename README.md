@@ -1,6 +1,6 @@
-# aron-agent-kit
+# five guys 🍔
 
-Contract-first 5-agent workflow (architect / data-infra / backend / frontend / qa) for monorepo product teams. Drop this folder into any project's `.claude/plugins/` and run `/setup` — it asks a few questions and configures itself.
+Five agents, one order, no substitutions. A contract-first workflow — architect, backend, frontend, data-infra, qa — for monorepo product teams. Drop this folder into any project's `.claude/plugins/` and run `/setup`; it asks a few questions and cooks up a configuration for your project.
 
 ---
 
@@ -8,17 +8,17 @@ Contract-first 5-agent workflow (architect / data-infra / backend / frontend / q
 
 **Option A — one-line install (recommended):** inside Claude Code, in your project:
 ```
-/plugin marketplace add batin/aron-agent-kit
-/plugin install aron-agent-kit@aron-marketplace
+/plugin marketplace add batin/five-guys
+/plugin install five-guys@five-guys-marketplace
 ```
 or the single-step form (Claude Code v2.1.275+):
 ```
-/plugin install aron-agent-kit --marketplace batin/aron-agent-kit
+/plugin install five-guys --marketplace batin/five-guys
 ```
 
 **Option B — manual copy** (no GitHub access needed, e.g. an internal fork):
 ```bash
-cp -r aron-agent-kit /path/to/your-project/.claude/plugins/
+cp -r five-guys /path/to/your-project/.claude/plugins/
 ```
 
 Then, either way, **run the setup wizard**:
@@ -38,8 +38,9 @@ Claude Code then discovers everything automatically:
 ## 📁 Structure
 
 ```
-aron-agent-kit/
+five-guys/
   .claude-plugin/plugin.json          # Plugin manifest
+  .claude-plugin/marketplace.json     # Lets this repo self-serve as a marketplace
   commands/setup.md                   # /setup wizard
   agents/
     architect.md                        # System design, contracts, ADR
@@ -55,7 +56,7 @@ aron-agent-kit/
 
 ---
 
-## 📋 Agent Responsibilities
+## 📋 The Five Guys
 
 ### architect
 Designs API contracts before development, decomposes work into tasks, records architectural decisions (ADR), mediates contract disputes.
@@ -104,7 +105,7 @@ Neither mode calls any real Jira/Trello/Linear API — it's vocabulary and workf
 
 ---
 
-## 🧩 Optional Skills
+## 🧩 Optional Skills (Toppings)
 
 `/setup` offers these and will attempt to install whichever you pick, falling back to manual instructions if it can't:
 
@@ -125,13 +126,13 @@ None are required — the 5 agents work fully without any of them.
 
 ## ✨ Why This Kit
 
-A validated agent-coordination pattern: **contract-first** development (shared schemas as single source of truth), **layer ownership** boundaries (clear responsibility matrix), and a **handoff protocol** (structured agent communication) — decoupled from any specific project's names, paths, or tech stack so it's reusable anywhere.
+A validated agent-coordination pattern: **contract-first** development (shared schemas as single source of truth), **layer ownership** boundaries (clear responsibility matrix), and a **handoff protocol** (structured agent communication) — decoupled from any specific project's names, paths, or tech stack so it's reusable anywhere. Same five specialists, every order, no waiting for a table.
 
 ---
 
 ## 🔗 Integration
 
-Claude Code automatically discovers this plugin when `.claude/plugins/aron-agent-kit/` exists with a valid `plugin.json` manifest, and discovers `/setup` from `commands/setup.md` the same way. `.claude-plugin/marketplace.json` lets this same repo also serve as a one-plugin marketplace, so `/plugin marketplace add` + `/plugin install` works without any manual copying.
+Claude Code automatically discovers this plugin when `.claude/plugins/five-guys/` exists with a valid `plugin.json` manifest, and discovers `/setup` from `commands/setup.md` the same way. `.claude-plugin/marketplace.json` lets this same repo also serve as a one-plugin marketplace, so `/plugin marketplace add` + `/plugin install` works without any manual copying.
 
 ---
 
