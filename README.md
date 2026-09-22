@@ -130,18 +130,36 @@ Same ownership boundaries, same discipline, no monorepo required.
 
 Toppings are free here. Take all of them, take none, nobody's counting. `/setup` offers these and tries to install whatever you pick, falling back to manual instructions if it can't reach them.
 
+The first three are the ones worth taking. Every agent is written around them — Memory Protocol and Token Efficiency Protocol sections, already in the files.
+
 | Topping | What it adds |
 |---------|--------------|
-| 🕸️ **graphify** | Codebase → queryable knowledge graph. Agents ask it questions instead of grepping blind. |
+| 🧠 **claude-mem** ⭐ | Persistent memory across sessions. This is the one that makes the crew context-independent — they recall past contracts, decisions, and bugs instead of needing them re-explained. |
+| 🕸️ **graphify** ⭐ | Codebase → queryable knowledge graph. Agents ask it questions instead of grepping blind. |
 | 🎭 **playwright-e2e** | Real E2E test generation and execution for the qa agent. |
 | 🛡️ **security-quality-scan** | Dependency / secret / OWASP scanning, wired into qa's security step. |
-| ⚡ **RTK** *(Rust Token Killer)* | Trims verbose command output. Cheaper, faster, less noise for every agent. |
+| ⚡ **RTK** ⭐ *(Rust Token Killer)* | Trims verbose command output — up to ~90% less. Every agent wraps its shell commands in it. |
 | 🪶 **Ponytail** | Lazy-senior-dev discipline: YAGNI first, shortest working diff, no cathedral for a shed. |
 | 🔍 **find-skills** | Discovers and installs other Claude Code skills on demand. |
 | 🦸 **superpowers** | Brainstorming, systematic debugging, TDD, plan-writing. |
 | 💅 **ui-ux-pro-max** | Design intelligence — palettes, type, a11y, component patterns — for the frontend guy. |
 
-**None of them are required.** The five guys work fine plain.
+**None of them are required.** The five guys work fine plain — every agent has a documented fallback path for when memory or the graph isn't there.
+
+---
+
+## 🧠 No Context, No Problem
+
+The usual failure mode of multi-agent setups: agent #4 gets invoked in a fresh session, has no idea what was decided three weeks ago, and confidently rebuilds something that already exists — or asks you to re-explain a decision you already made twice.
+
+Every agent here opens with a **Memory Protocol** instead:
+
+1. **Recall before acting.** With `claude-mem` installed, each agent queries memory first — cheap `search` (~50-100 tokens) before expensive `get_observations`. The architect recalls past contracts and ADRs. QA recalls *what broke here before*, which is the single best predictor of what'll break next.
+2. **Fall back to artifacts.** No claude-mem? Each agent has an ordered fallback: `docs/adr/`, shared schema files, migration history, task descriptions, `git log`. Never straight to guessing.
+3. **Verify before trusting.** Memory records what *was* true. Agents confirm recalled paths and fields still exist — **and when memory and the code disagree, the code wins**, loudly.
+4. **State decisions on the way out.** Every agent closes by emitting `DECISION:` lines so the next session inherits the reasoning, not just the diff.
+
+Paired with a **Token Efficiency Protocol** in each agent — `rtk` wrapping every shell command, `graphify` answering structural questions instead of blind grep — so the window stays wide enough to actually think.
 
 ---
 

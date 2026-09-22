@@ -37,14 +37,17 @@ Store the answer as `WORKING_MODE` (`sprint` or `normal`).
 
 ## Step 3 — Optional skills menu
 
-Present these 8 candidate skills/tools as a multi-select choice ("pick any that apply, or none"):
+Present these 9 candidate skills/tools as a multi-select choice ("pick any that apply, or none").
+
+**Recommend the top three by default** — `claude-mem`, `graphify`, and `RTK` are what let the agents work without depending on conversation context, and every agent file already has a Memory Protocol and Token Efficiency Protocol written around them. Say so when presenting the menu.
 
 | Skill | Purpose |
 |-------|---------|
-| **graphify** | Turns the codebase into a queryable knowledge graph — agents use it instead of raw grep for architecture questions. |
+| **claude-mem** ⭐ | Persistent memory across sessions — captures what agents do and injects it back later. This is what makes the agents context-independent: they recall past contracts, decisions, and bugs instead of needing them re-explained. |
+| **graphify** ⭐ | Turns the codebase into a queryable knowledge graph — agents use it instead of raw grep for architecture questions. |
 | **playwright-e2e** | Playwright-based end-to-end test generation and execution — useful for the QA agent's E2E scenarios. |
 | **security-quality-scan** | Automated dependency/secret/OWASP security scanning — used by the QA agent's security-scan step. |
-| **RTK (Rust Token Killer)** | Token-optimized CLI proxy that trims verbose command output — recommended for all 5 agents' efficiency. |
+| **RTK (Rust Token Killer)** ⭐ | Token-optimized CLI proxy that trims verbose command output — all 5 agents are written to wrap their shell commands in it. |
 | **Ponytail** | A "lazy senior developer" output-discipline mode (YAGNI-first, minimal diffs) — useful for backend/frontend agents to avoid over-engineering. |
 | **find-skills** | Helps discover and install other Claude Code skills on demand. |
 | **superpowers** | A broader skill pack (brainstorming, systematic debugging, TDD, plan-writing) that complements the 5-agent workflow. |
@@ -56,9 +59,16 @@ Record the user's selection as `SELECTED_SKILLS` (a list of names, or "none").
 
 For each skill the user selected, attempt an automatic install via Bash, e.g. `claude plugin install <name>@<marketplace>` (or the marketplace-specific equivalent — check `claude plugin marketplace list` / existing `.claude` config for known marketplace sources first). If the install command fails or no marketplace source is known for that skill in this environment, don't retry — instead print clear manual install instructions (marketplace name + command, or a note that it's a personal/local tool the user needs to set up themselves, as is the case for `rtk`).
 
+Known install paths:
+- **claude-mem** — `/plugin marketplace add thedotmack/claude-mem` then `/plugin install claude-mem`, or `npx claude-mem install`. Note it needs a one-time browser sign-in (email magic link) to provision a memory key, and that it then works automatically via session hooks while also exposing `search` / `timeline` / `get_observations` MCP tools the agents query directly.
+- **graphify** — needs an initial `graphify update .` to build the graph before agents can query it.
+- **rtk** — a local CLI binary, not a plugin; if it's not on `PATH`, tell the user rather than trying to install it.
+
 After attempting installs, ask the user once: **"Initialize/run these now, or just record them for later?"**
-- If **now**: for any skill with a first-run/init step (e.g. `graphify` typically needs an initial `graphify update .` to build its graph), run that step.
+- If **now**: run each one's first-run step — `graphify update .` to build the graph, and for claude-mem, confirm the sign-in is done and a session hook is registered.
 - If **later**: just leave the recorded selection — don't run anything else.
+
+Whatever the user picks, remind them the agents degrade gracefully: each has a documented fallback path (ADRs, schema files, task descriptions, `git log`) for when memory or the graph isn't available. Nothing here is a hard dependency.
 
 ## Step 5 — Apply the templating
 
