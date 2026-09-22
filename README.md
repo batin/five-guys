@@ -6,20 +6,30 @@ Contract-first 5-agent workflow (architect / data-infra / backend / frontend / q
 
 ## 🚀 Quick Start
 
-1. **Copy into your project:**
-   ```bash
-   cp -r aron-agent-kit /path/to/your-project/.claude/plugins/
-   ```
+**Option A — one-line install (recommended):** inside Claude Code, in your project:
+```
+/plugin marketplace add batin/aron-agent-kit
+/plugin install aron-agent-kit@aron-marketplace
+```
+or the single-step form (Claude Code v2.1.275+):
+```
+/plugin install aron-agent-kit --marketplace batin/aron-agent-kit
+```
 
-2. **Run the setup wizard inside Claude Code:**
-   ```
-   /setup
-   ```
-   It will ask for your project name, package manager, app paths, business modules, whether you want **sprint mode** (Jira/Trello-style board + card workflow) or **normal mode** (continuous handoff, no cards/sprints), and which optional skills to enable — then configures the 5 agents and 2 skills for your project.
+**Option B — manual copy** (no GitHub access needed, e.g. an internal fork):
+```bash
+cp -r aron-agent-kit /path/to/your-project/.claude/plugins/
+```
 
-3. **Claude Code discovers the rest automatically:**
-   - 5 agents: `architect`, `backend`, `frontend`, `data-infra`, `qa`
-   - 2 core skills: `project-conventions`, `agent-coordination`
+Then, either way, **run the setup wizard**:
+```
+/setup
+```
+It will ask for your project name, package manager, app paths, business modules, whether you want **sprint mode** (Jira/Trello-style board + card workflow) or **normal mode** (continuous handoff, no cards/sprints), and which optional skills to enable — then configures the 5 agents and 2 skills for your project.
+
+Claude Code then discovers everything automatically:
+- 5 agents: `architect`, `backend`, `frontend`, `data-infra`, `qa`
+- 2 core skills: `project-conventions`, `agent-coordination`
 
 > **Non-interactive/CI fallback:** `./setup.sh "MyProject" "pnpm" "apps/web" "apps/api" "packages/shared" "packages/db" "FEAT,BUG" "normal"` does the same templating without the conversational flow (no optional-skill install step).
 
@@ -121,7 +131,7 @@ A validated agent-coordination pattern: **contract-first** development (shared s
 
 ## 🔗 Integration
 
-Claude Code automatically discovers this plugin when `.claude/plugins/aron-agent-kit/` exists with a valid `plugin.json` manifest, and discovers `/setup` from `commands/setup.md` the same way.
+Claude Code automatically discovers this plugin when `.claude/plugins/aron-agent-kit/` exists with a valid `plugin.json` manifest, and discovers `/setup` from `commands/setup.md` the same way. `.claude-plugin/marketplace.json` lets this same repo also serve as a one-plugin marketplace, so `/plugin marketplace add` + `/plugin install` works without any manual copying.
 
 ---
 

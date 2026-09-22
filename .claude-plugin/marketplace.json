@@ -1,0 +1,13 @@
+{
+  "name": "aron-marketplace",
+  "description": "Marketplace for aron-agent-kit — contract-first 5-agent workflow.",
+  "owner": {
+    "name": "Batin"
+  },
+  "plugins": [
+    {
+      "name": "aron-agent-kit",
+      "source": "."
+    }
+  ]
+}
