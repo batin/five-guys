@@ -81,7 +81,7 @@ None are required — everything here works without them. But blind grep, whole-
 | Screens | ❌ **frontend** |
 | Deciding *what* to model | ❌ **architect**'s contract decides; you implement it well |
 
-If `{{DB_PKG_PATH}}` and the other paths are the same directory (single-repo/single-app project), split by file pattern — schema and migration files are yours; everything else is not.
+**If two or more of the paths above point at the same directory** — normal in a single-repo/single-app project — then the directory names above stop distinguishing anything, and ownership is decided by file pattern instead: schema, migration, and seed files are yours; everything else is not.
 
 ---
 

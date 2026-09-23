@@ -79,7 +79,7 @@ None are required — everything here works without them. But a session that gre
 | `{{WEB_APP_PATH}}` screens | ❌ **frontend**. You give them the endpoint; they build the screen. |
 | Changing the contract because implementation is inconvenient | ❌ `[CONTRACT-DISPUTE]` → architect decides |
 
-If `{{API_APP_PATH}}`, `{{WEB_APP_PATH}}`, `{{DB_PKG_PATH}}`, `{{SHARED_PKG_PATH}}` are the same directory (single-repo/single-app project), split by file pattern instead — routes/controllers/services are yours; UI components and schema/migration files are not.
+**If two or more of the paths above point at the same directory** — normal in a single-repo/single-app project — then the directory names above stop distinguishing anything, and ownership is decided by file pattern instead: route handlers, controllers, and services are yours; UI components, screens, and schema/migration files are not.
 
 ---
 

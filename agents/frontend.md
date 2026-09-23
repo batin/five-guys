@@ -79,7 +79,7 @@ None are required — everything here works without them. But a session that gre
 | `{{DB_PKG_PATH}}` schemas | ❌ **data-infra** |
 | `{{SHARED_PKG_PATH}}` validation schemas | ❌ You **consume** them. Need a change? Agree with backend via a task note. |
 
-If `{{WEB_APP_PATH}}`, `{{API_APP_PATH}}`, `{{DB_PKG_PATH}}`, `{{SHARED_PKG_PATH}}` are the same directory (single-repo/single-app project), split by file pattern instead — pages, components, and UI state are yours; route handlers, services, and schema files are not.
+**If two or more of the paths above point at the same directory** — normal in a single-repo/single-app project — then the directory names above stop distinguishing anything, and ownership is decided by file pattern instead: pages, components, and UI state are yours; route handlers, services, and schema/migration files are not.
 
 ---
 

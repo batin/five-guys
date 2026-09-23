@@ -78,11 +78,20 @@ Read each of the 5 files in `agents/` and the 2 files in `skills/*/SKILL.md`. Fo
 2. Replace `{{SELECTED_SKILLS}}` (only present in `skills/project-conventions/SKILL.md`) with a short bullet list of the skills selected in Step 3 (or "None selected." if none).
 3. For the two mode blocks in `skills/agent-coordination/SKILL.md` (delimited by `<!-- SPRINT MODE START/END -->` and `<!-- NORMAL MODE START/END -->`): delete the block that does **not** match `WORKING_MODE`, including its markers, and delete the markers (but keep the content) of the block that does match — so the shipped file reads as one coherent mode with no leftover HTML comments.
 
+   ⚠️ **Four markers exist, and all four must be gone when you're done** — two for the block you delete, two for the block you keep. Forgetting the surviving block's *opening* marker is the most common mistake here; Step 6 checks for exactly this.
+
 Do this with direct Read + Edit calls — never by shelling out to `sed`. Read+Edit gives you per-file visibility when something unexpected turns up (a placeholder already replaced, a file the user customized), and avoids the escaping pitfalls of substituting arbitrary user-supplied paths into a `sed` expression.
 
 ## Step 6 — Confirm and summarize
 
-After all edits, run `grep -rn '{{' agents skills` (relative to the plugin directory) to confirm no placeholders remain — if any are found, fix them before finishing. Then print a summary:
+After all edits, run **both** checks from the plugin directory. Each must come back empty — if either returns a hit, fix it before finishing:
+
+```bash
+grep -rn '{{' agents skills                    # no unreplaced placeholders
+grep -rn 'MODE START\|MODE END' agents skills  # no leftover mode markers
+```
+
+Then print a summary:
 
 ```
 ✅ five guys configured
