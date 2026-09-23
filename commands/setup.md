@@ -11,7 +11,7 @@ Find this plugin's own directory (it contains `agents/`, `skills/`, `setup.sh`, 
 
 ## Step 1 — Core project config
 
-If `$ARGUMENTS` contains positional values in the same order as `setup.sh` (ProjectName, PkgManager, WebPath, ApiPath, SharedPkgPath, DbPkgPath, Modules), use those directly and skip asking. Otherwise ask the user (batch into as few AskUserQuestion calls as reasonable, or plain questions if AskUserQuestion isn't available):
+If `$ARGUMENTS` contains positional values in the same order as `setup.sh` (ProjectName, PkgManager, WebPath, ApiPath, SharedPkgPath, DbPkgPath, Modules, WorkingMode, SelectedSkills — the last two optional), use those directly and skip the corresponding questions below. Otherwise ask the user (batch into as few AskUserQuestion calls as reasonable, or plain questions if AskUserQuestion isn't available):
 
 - **Project name** (required, no default)
 - **Package manager**: npm / pnpm / yarn / bun (default `pnpm`)

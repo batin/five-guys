@@ -2,9 +2,21 @@
 # five guys setup — fills {{PLACEHOLDER}} values in agents/ and skills/ in place.
 # This is the non-interactive/CI fallback. For an interactive, guided setup
 # (working mode, optional skills), run the `/setup` slash command in Claude Code instead.
-# Usage: ./setup.sh "ProjectName" "pnpm" "apps/web" "apps/api" "packages/shared" "packages/db" "FEAT,BUG" "normal"
+# Usage: ./setup.sh "ProjectName" "pnpm" "apps/web" "apps/api" "packages/shared" "packages/db" \
+#                   "FEAT,BUG" "normal" "claude-mem, graphify, rtk"
+#   $1 project name (required)          $6 db package path
+#   $2 package manager                  $7 comma-separated modules
+#   $3 web/frontend path                $8 working mode: sprint | normal
+#   $4 api/backend path                 $9 optional skills, free text (recorded only)
+#   $5 shared package path
+#
 # Works for a monorepo (four distinct paths) or a single-repo/single-app project
 # (pass the same path, e.g. ".", for all four — agents then split by file pattern).
+#
+# NOTE: this script only templates files. It does NOT install the optional skills
+# ($9 is recorded as text). The agents reference claude-mem, graphify and rtk and
+# degrade gracefully without them — but if you want them actually installed, use
+# the /setup slash command instead.
 set -euo pipefail
 
 PROJECT_NAME=${1:?"project name required"}
@@ -39,9 +51,10 @@ replace() {
   local pattern="$1"
   local replacement="$2"
 
-  # Escape special characters for sed (/, \, &)
-  replacement=$(printf '%s\n' "$replacement" | sed -e 's/[\/&]/\\&/g')
-  pattern=$(printf '%s\n' "$pattern" | sed -e 's/[\/&]/\\&/g')
+  # Escape sed-special characters in both pattern and replacement: \ / &
+  # (the old character class omitted the backslash despite the comment claiming it)
+  replacement=$(printf '%s\n' "$replacement" | sed -e 's|[\\/&]|\\&|g')
+  pattern=$(printf '%s\n' "$pattern" | sed -e 's|[\\/&]|\\&|g')
 
   find "$DIR/agents" "$DIR/skills" -type f -name "*.md" -print0 \
     | xargs -0 sed -i.bak "s/${pattern}/${replacement}/g"
