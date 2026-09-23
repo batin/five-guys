@@ -50,7 +50,7 @@ Claude Code picks up the rest on its own:
 - **5 agents:** `architect`, `backend`, `frontend`, `data-infra`, `qa`
 - **2 core skills:** `project-conventions`, `agent-coordination`
 
-> 🤖 **Already know your order?** Pass it inline and skip the questions: `/setup MyProject pnpm apps/web apps/api packages/shared packages/db FEAT,BUG normal`
+> 🤖 **Already know your order?** Pass it inline and skip the questions: `/setup MyProject pnpm FEAT,BUG normal`
 
 ---
 
@@ -114,15 +114,16 @@ Neither mode calls a real Jira/Trello/Linear API — it's vocabulary and workflo
 
 ## 🚚 We Cater Anywhere
 
-Monorepo? Single app? One folder with a `src/` in it and a dream? All fine.
+Monorepo? Single app? One folder with a `src/` in it and a dream? All fine — because **the kit never asks where your code lives.**
 
-`/setup` asks for four paths (web, api, shared, db). In a **monorepo** those are four separate directories. In a **single-repo / single-app** project, point all four at the same place — even `.` — and the crew switches to splitting by **file pattern** instead of directory:
+Each guy owns a *concern*, not a directory:
 
-- routes / controllers / services → 🔥 backend
+- route handlers / controllers / services → 🔥 backend
 - components / pages / UI state → 🎨 frontend
-- schema / migration files → 📦 data-infra
+- schema / migrations / seeds → 📦 data-infra
+- shared validation schemas → 🔥 backend owns, 🎨 frontend consumes
 
-Same ownership boundaries, same discipline, no monorepo required.
+Agents find their own area by looking at the repo (asking `graphify` if it's installed, globbing if not). That's deliberate: a path baked into five agent files is wrong the first time someone reorganizes, and nobody re-runs setup after a refactor. Concerns don't move. Directories do.
 
 ---
 

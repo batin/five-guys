@@ -6,16 +6,13 @@ description: "{{PROJECT_NAME}} project conventions, naming standards, project la
 # {{PROJECT_NAME}} Project Conventions
 
 ## Project Layout
-```
-{{PROJECT_NAME}}/
-  {{WEB_APP_PATH}}          # Frontend agent
-  {{API_APP_PATH}}          # Backend agent
-  {{SHARED_PKG_PATH}}       # Schemas, DTO types, constants (contract source of truth)
-  {{DB_PKG_PATH}}           # Schema, migrations, seed (Data/Infra agent)
-```
+
+**Ownership is by concern, not by directory.** This kit deliberately does not record where things live — layouts differ per project and change over time, and a hardcoded path is a lie waiting to happen. Agents locate their areas by looking at the repo (`graphify query` if the graph exists, otherwise glob/grep), and the ownership boundaries below hold whatever the layout turns out to be — separate packages in a monorepo, or everything side by side in one `src/`.
+
+When an agent genuinely can't tell which files fall under its concern, it **asks the user** rather than guessing. Guessing produces edits in another agent's territory, which is the one failure this ownership model exists to prevent.
+
 - Package manager: **{{PKG_MANAGER}}**.
-- Validation schemas are defined only in the shared package/module; FE and BE consume from there.
-- **Monorepo or single repo, both work.** In a monorepo, the four paths above are separate top-level directories/packages. In a single-repo or single-app project (no separate frontend/backend split), some or all of these paths can be the same directory — even `.` for all four. When paths coincide, agents tell their areas apart by **file/module pattern** instead of top-level directory (e.g. `src/routes/api/**` = backend, `src/components/**` = frontend, `src/db/schema.*` = data-infra), following the same ownership boundaries below.
+- Validation schemas live in exactly one shared module; frontend and backend both consume from there and neither re-declares them.
 
 ## Card ID & Naming
 
@@ -40,10 +37,10 @@ test(MODULE-DB-002): short description
 ## Ownership Boundaries
 | Area | Owner |
 |------|-------|
-| API app/module ({{API_APP_PATH}}), OpenAPI, business rules | Backend agent |
-| Web app/module ({{WEB_APP_PATH}}), UI screens | Frontend agent |
-| DB package/module ({{DB_PKG_PATH}}), auth infrastructure, CI | Data/Infra agent |
-| Shared package/module schemas ({{SHARED_PKG_PATH}}) | Backend agent (FE consumes, changes go through BE) |
+| Server-side code, OpenAPI, business rules | Backend agent |
+| UI components, screens, client-side state | Frontend agent |
+| Schema, migrations, seeds, auth infrastructure, CI | Data/Infra agent |
+| Shared schema modules | Backend agent (FE consumes, changes go through BE) |
 
 If two or more of these paths are the same directory (single-repo/single-app project), ownership is decided by file pattern within that directory rather than by the directory itself — see the Project Layout note above.
 

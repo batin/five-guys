@@ -11,18 +11,13 @@ Find this plugin's own directory (it contains `agents/`, `skills/`, `.claude-plu
 
 ## Step 1 — Core project config
 
-If `$ARGUMENTS` contains positional values in this order — ProjectName, PkgManager, WebPath, ApiPath, SharedPkgPath, DbPkgPath, Modules, WorkingMode, SelectedSkills (everything after ProjectName optional) — use those directly and skip the corresponding questions below. Otherwise ask the user (batch into as few AskUserQuestion calls as reasonable, or plain questions if AskUserQuestion isn't available):
+If `$ARGUMENTS` contains positional values in this order — ProjectName, PkgManager, Modules, WorkingMode, SelectedSkills (everything after ProjectName optional) — use those directly and skip the corresponding questions below. Otherwise ask the user (batch into as few AskUserQuestion calls as reasonable, or plain questions if AskUserQuestion isn't available):
 
 - **Project name** (required, no default)
 - **Package manager**: npm / pnpm / yarn / bun (default `pnpm`)
-- **Repo layout**: monorepo (separate frontend/backend/shared/db directories) or single-repo/single-app (no such split). This only changes the defaults below — either way the kit works the same.
-  - If **monorepo**: ask the next four paths normally.
-  - If **single-repo/single-app**: default all four paths below to the same value (e.g. `.` or `src`) unless the user names distinct ones. Tell the user the agents will then tell their areas apart by file/module pattern (routes vs components vs schema files) instead of by directory — this is expected and documented in `project-conventions`.
-- **Frontend/web app path** (default `apps/web`, or the single-repo path chosen above)
-- **Backend/API app path** (default `apps/api`, or the single-repo path chosen above)
-- **Shared package path** (schemas/DTOs/constants) (default `packages/shared`, or the single-repo path chosen above)
-- **DB package path** (schema/migrations/seed) (default `packages/db`, or the single-repo path chosen above)
 - **Modules/domains** — comma-separated business module names used in card IDs (e.g. `ORD,INV`) (default `CORE`)
+
+**Do not ask where code lives.** This kit records no directory paths by design: layouts differ per project and drift over time, so a path baked into five agent files becomes wrong the first time someone reorganizes. Ownership is defined by concern (server-side code, UI, schema/migrations, shared schemas) and each agent locates its own area by looking at the repo. If the user volunteers their layout, that's fine context for the conversation — just don't try to persist it.
 
 ## Step 2 — Working mode
 
@@ -74,7 +69,7 @@ Whatever the user picks, remind them the agents degrade gracefully: each has a d
 
 Read each of the 5 files in `agents/` and the 2 files in `skills/*/SKILL.md`. For each file, use Edit to:
 
-1. Replace every occurrence of `{{PROJECT_NAME}}`, `{{PKG_MANAGER}}`, `{{WEB_APP_PATH}}`, `{{API_APP_PATH}}`, `{{SHARED_PKG_PATH}}`, `{{DB_PKG_PATH}}`, `{{MODULES}}` with the values collected in Step 1.
+1. Replace every occurrence of `{{PROJECT_NAME}}`, `{{PKG_MANAGER}}`, `{{MODULES}}` with the values collected in Step 1.
 2. Replace `{{SELECTED_SKILLS}}` (only present in `skills/project-conventions/SKILL.md`) with a short bullet list of the skills selected in Step 3 (or "None selected." if none).
 3. For the two mode blocks in `skills/agent-coordination/SKILL.md` (delimited by `<!-- SPRINT MODE START/END -->` and `<!-- NORMAL MODE START/END -->`): delete the block that does **not** match `WORKING_MODE`, including its markers, and delete the markers (but keep the content) of the block that does match — so the shipped file reads as one coherent mode with no leftover HTML comments.
 
