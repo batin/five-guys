@@ -7,11 +7,11 @@ You are running the five guys setup wizard. Follow these steps in order. Be conv
 
 ## Step 0 — Locate the plugin
 
-Find this plugin's own directory (it contains `agents/`, `skills/`, `setup.sh`, `.claude-plugin/plugin.json`) relative to where this command was invoked — normally `.claude/plugins/five-guys/` under the current project root. Verify `agents/` and `skills/` both exist there. If not found, tell the user and stop.
+Find this plugin's own directory (it contains `agents/`, `skills/`, `.claude-plugin/plugin.json`) relative to where this command was invoked — normally `.claude/plugins/five-guys/` under the current project root. Verify `agents/` and `skills/` both exist there. If not found, tell the user and stop.
 
 ## Step 1 — Core project config
 
-If `$ARGUMENTS` contains positional values in the same order as `setup.sh` (ProjectName, PkgManager, WebPath, ApiPath, SharedPkgPath, DbPkgPath, Modules, WorkingMode, SelectedSkills — the last two optional), use those directly and skip the corresponding questions below. Otherwise ask the user (batch into as few AskUserQuestion calls as reasonable, or plain questions if AskUserQuestion isn't available):
+If `$ARGUMENTS` contains positional values in this order — ProjectName, PkgManager, WebPath, ApiPath, SharedPkgPath, DbPkgPath, Modules, WorkingMode, SelectedSkills (everything after ProjectName optional) — use those directly and skip the corresponding questions below. Otherwise ask the user (batch into as few AskUserQuestion calls as reasonable, or plain questions if AskUserQuestion isn't available):
 
 - **Project name** (required, no default)
 - **Package manager**: npm / pnpm / yarn / bun (default `pnpm`)
@@ -78,7 +78,7 @@ Read each of the 5 files in `agents/` and the 2 files in `skills/*/SKILL.md`. Fo
 2. Replace `{{SELECTED_SKILLS}}` (only present in `skills/project-conventions/SKILL.md`) with a short bullet list of the skills selected in Step 3 (or "None selected." if none).
 3. For the two mode blocks in `skills/agent-coordination/SKILL.md` (delimited by `<!-- SPRINT MODE START/END -->` and `<!-- NORMAL MODE START/END -->`): delete the block that does **not** match `WORKING_MODE`, including its markers, and delete the markers (but keep the content) of the block that does match — so the shipped file reads as one coherent mode with no leftover HTML comments.
 
-Do this with direct Read + Edit calls, not by shelling out to `setup.sh` (gives per-file visibility if something unexpected is found, e.g. a placeholder already replaced).
+Do this with direct Read + Edit calls — never by shelling out to `sed`. Read+Edit gives you per-file visibility when something unexpected turns up (a placeholder already replaced, a file the user customized), and avoids the escaping pitfalls of substituting arbitrary user-supplied paths into a `sed` expression.
 
 ## Step 6 — Confirm and summarize
 

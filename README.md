@@ -50,7 +50,7 @@ Claude Code picks up the rest on its own:
 - **5 agents:** `architect`, `backend`, `frontend`, `data-infra`, `qa`
 - **2 core skills:** `project-conventions`, `agent-coordination`
 
-> 🤖 **Phone order (CI / non-interactive):** `./setup.sh "MyProject" "pnpm" "apps/web" "apps/api" "packages/shared" "packages/db" "FEAT,BUG" "normal"` — same config, no conversation, no toppings menu.
+> 🤖 **Already know your order?** Pass it inline and skip the questions: `/setup MyProject pnpm apps/web apps/api packages/shared packages/db FEAT,BUG normal`
 
 ---
 
@@ -191,7 +191,6 @@ five-guys/
   skills/
     agent-coordination/SKILL.md         # Workflow, handoff protocol
     project-conventions/SKILL.md        # Naming, project layout, DoD
-  setup.sh                              # CLI fallback for templating
 ```
 
 Claude Code finds this plugin automatically when `.claude/plugins/five-guys/` exists with a valid `plugin.json`, and picks up `/setup` from `commands/setup.md` the same way. `.claude-plugin/marketplace.json` lets this one repo double as its own marketplace — which is why `/plugin install` works with zero manual copying.
